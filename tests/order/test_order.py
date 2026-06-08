@@ -1,13 +1,13 @@
 import pytest
-import data
 import allure
+from data import OrderData
 
 class TestOrder:
 
     @allure.title("Создание заказа")
-    @pytest.mark.parametrize("payload_override", data.COLOR)
+    @pytest.mark.parametrize("payload_override", OrderData.COLOR)
     def test_create_order_success(self, order_methods, payload_override):
-        order_payload = {**data.ORDER_DATA, **payload_override}
+        order_payload = {**OrderData.ORDER_DATA, **payload_override}
         status_code, response = order_methods.create_order(order_payload)
         assert (
             not isinstance(response, str)

@@ -2,8 +2,7 @@ import allure
 import requests
 import json
 import urls
-import pytest
-import data
+
 
 class OrderMethods:
 

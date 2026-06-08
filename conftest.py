@@ -15,7 +15,6 @@ def courier(courier_methods):
     reg_data = helpers.generate_new_courier()
     status_code, response_data = courier_methods.create_courier(reg_data)
     courier_id = courier_methods.authorize_courier(reg_data)
-    print(courier_id)
     yield status_code, response_data, reg_data
     courier_methods.delete_courier(courier_id)
 

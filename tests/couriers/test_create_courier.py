@@ -1,21 +1,18 @@
-from methods.couriers_methods import CourierMethods
-from pytest_bdd.parsers import string
-import data
-import helpers
 import pytest
 import allure
-
+from data import CourierData
+from data import CourierResponse
 
 @allure.title("Регистрация курьера")
 class TestCreateCourier:
 
     @allure.title("Успешная регистрация нового курьера")
-    def test_create_new_courier_success(self, courier):
-        status_code, courier_data, _ = courier
+    def test_create_new_courier_success(self, courier_methods):
+        status_code, courier_data = courier_methods.create_courier()
         assert (
             not isinstance(courier_data, str)
             and status_code == 201
-            and courier_data == data.CREATE_COURIER_RESPONSE_SUCCESS
+            and courier_data == CourierResponse.CREATE_COURIER_RESPONSE_SUCCESS
         ), f"{status_code}, message: {courier_data}"
 
     @allure.title("Ошибка при регистрации существующего курьера")
@@ -25,18 +22,18 @@ class TestCreateCourier:
         assert (
             not isinstance(courier_data, str)
             and status_code == 409
-            and courier_data == data.CREATE_COURIER_RESPONSE_FAIL_409
+            and courier_data == CourierResponse.CREATE_COURIER_RESPONSE_FAIL_409
         ), f"{status_code}, message: {courier_data}"
 
     @allure.title("Ошибка при регистрации курьера с отправкой неполных данных")
     @pytest.mark.parametrize(
         "params",
         [
-            data.COURIER_DATA_ONLY_FIRSTNAME,
-            data.COURIER_DATA_ONLY_LOGIN,
-            data.COURIER_DATA_ONLY_PASSWORD,
-            data.COURIER_DATA_WITHOUT_LOGIN,
-            data.COURIER_DATA_WITHOUT_PASSWORD,
+            CourierData.COURIER_DATA_ONLY_FIRSTNAME,
+            CourierData.COURIER_DATA_ONLY_LOGIN,
+            CourierData.COURIER_DATA_ONLY_PASSWORD,
+            CourierData.COURIER_DATA_WITHOUT_LOGIN,
+            CourierData.COURIER_DATA_WITHOUT_PASSWORD,
         ],
     )
     def test_create_new_courier_witout_required_fields(self, params, courier_methods):
@@ -44,5 +41,5 @@ class TestCreateCourier:
         assert (
             not isinstance(courier_data, str)
             and status_code == 400
-            and courier_data == data.CREATE_COURIER_RESPONSE_FAIL_400
+            and courier_data == CourierResponse.CREATE_COURIER_RESPONSE_FAIL_400
         ), f"{status_code}, message: {courier_data}"

@@ -1,4 +1,3 @@
-import data
 import allure
 import requests
 import helpers
@@ -7,7 +6,7 @@ import urls
 
 
 class CourierMethods:
-    
+
     @allure.step("Регистрация курьера")
     def create_courier(self, params=None):
         if params is None:
