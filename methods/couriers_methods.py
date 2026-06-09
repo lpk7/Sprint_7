@@ -13,9 +13,9 @@ class CourierMethods:
             params = helpers.generate_new_courier()
         response = requests.post(f"{urls.BASE_URL}{urls.COURIERS_URL}", data=params)
         try:
-            return response.status_code, response.json()
+            return response.status_code, response.json(), params
         except json.decoder.JSONDecodeError:
-            return response.status_code, response.text
+            return response.status_code, response.text, params
 
     @allure.step("Авторизация курьера")
     def authorize_courier(self, params):

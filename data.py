@@ -46,6 +46,8 @@ class CourierResponse:
 
 class CourierData:
 
+    NEW_COURIER_DATA = {"login": "kurvabober", "password": "12345", "firstName": "kurvabober"}
+
     COURIER_DATA_ONLY_LOGIN = {"login": "kurvabober2"}
 
     COURIER_DATA_ONLY_PASSWORD = {"password": "12345"}

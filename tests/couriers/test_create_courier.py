@@ -7,8 +7,8 @@ from data import CourierResponse
 class TestCreateCourier:
 
     @allure.title("Успешная регистрация нового курьера")
-    def test_create_new_courier_success(self, courier_methods):
-        status_code, courier_data = courier_methods.create_courier()
+    def test_create_new_courier_success(self, courier, courier_methods):
+        status_code, courier_data, _ = courier_methods.create_courier(courier)
         assert (
             not isinstance(courier_data, str)
             and status_code == 201
@@ -17,8 +17,8 @@ class TestCreateCourier:
 
     @allure.title("Ошибка при регистрации существующего курьера")
     def test_create_couriers_with_same_data_fail(self, courier, courier_methods):
-        _, _, reg_data = courier
-        status_code, courier_data = courier_methods.create_courier(reg_data)
+        courier_methods.create_courier(courier)
+        status_code, courier_data, _ = courier_methods.create_courier(courier)
         assert (
             not isinstance(courier_data, str)
             and status_code == 409
@@ -37,7 +37,7 @@ class TestCreateCourier:
         ],
     )
     def test_create_new_courier_witout_required_fields(self, params, courier_methods):
-        status_code, courier_data = courier_methods.create_courier(params)
+        status_code, courier_data, _ = courier_methods.create_courier(params)
         assert (
             not isinstance(courier_data, str)
             and status_code == 400

@@ -9,8 +9,8 @@ class TestLoginCourier:
 
     @allure.title("Успешная авторизация курьера")
     def test_login_courier_success(self, courier, courier_methods):
-        _, _, reg_data = courier
-        status_code, courier_data, _ = courier_methods.authorize_courier(reg_data)
+        _, _, params = courier_methods.create_courier(courier)
+        status_code, courier_data, _ = courier_methods.authorize_courier(params)
         assert (
             not isinstance(courier_data, str)
             and status_code == 200
